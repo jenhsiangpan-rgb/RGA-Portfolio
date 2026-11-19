@@ -1,0 +1,867 @@
+<title>Experience Studies Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=Public+Sans:wght@400..600&display=swap">
+<style>
+/* Layout concept: a ledger. A narrow label column on the left names where each project sits in an experience study, and the right column carries the argument and a working demo. */
+:root {
+  --bg: #EEF1EF;
+  --surface: #F8FAF9;
+  --fg: #152320;
+  --muted: #52615D;
+  --rule: #C7D0CC;
+  --accent: #0A5C55;
+  --accent-ink: #FFFFFF;
+  --signal: #B3261E;
+  --band1: rgba(46, 125, 87, 0.30);
+  --band2: rgba(214, 168, 40, 0.26);
+  --hot: 196, 74, 38;
+  --cold: 20, 116, 128;
+  --good: 38, 128, 84;
+  --bad: 186, 50, 58;
+  --hatch: #AAB6B1;
+  --f-display: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --f-body: 'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1614;
+    --surface: #15201D;
+    --fg: #E4EBE8;
+    --muted: #9BAAA5;
+    --rule: #2B3A36;
+    --accent: #5BC5B8;
+    --accent-ink: #0E1614;
+    --signal: #FF7A6E;
+    --band1: rgba(80, 190, 130, 0.30);
+    --band2: rgba(230, 190, 70, 0.24);
+    --hot: 236, 120, 80;
+    --cold: 70, 180, 190;
+    --good: 80, 190, 130;
+    --bad: 240, 110, 120;
+    --hatch: #40504B;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E1614;
+  --surface: #15201D;
+  --fg: #E4EBE8;
+  --muted: #9BAAA5;
+  --rule: #2B3A36;
+  --accent: #5BC5B8;
+  --accent-ink: #0E1614;
+  --signal: #FF7A6E;
+  --band1: rgba(80, 190, 130, 0.30);
+  --band2: rgba(230, 190, 70, 0.24);
+  --hot: 236, 120, 80;
+  --cold: 70, 180, 190;
+  --good: 80, 190, 130;
+  --bad: 240, 110, 120;
+  --hatch: #40504B;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--f-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  padding-block: 0 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1080px; margin-inline: auto; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+h1, h2, h3 { font-family: var(--f-display); font-weight: 500; line-height: 1.15; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h1 { font-size: clamp(2.1rem, 5.4vw, 3.6rem); max-width: 19ch; }
+h2 { font-size: clamp(1.55rem, 3vw, 2.15rem); }
+h3 { font-size: 1.3rem; }
+p { margin: 0 0 1em; }
+.mono, .kicker, .label, legend, th { font-family: var(--f-mono); }
+.kicker, .label { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+/* header */
+.site { display: flex; flex-wrap: wrap; gap: 8px 28px; justify-content: space-between; align-items: baseline; padding-block: 20px; border-bottom: 1px solid var(--rule); }
+.site strong { font-family: var(--f-mono); font-weight: 500; font-size: 0.95rem; }
+.site nav { display: flex; flex-wrap: wrap; gap: 4px 20px; font-size: 0.9rem; }
+.site nav a { color: var(--muted); text-decoration: none; }
+.site nav a:hover { color: var(--accent); text-decoration: underline; }
+
+/* hero */
+.hero { padding-block: 56px 48px; }
+.hero .kicker { margin-bottom: 20px; }
+.lede { font-size: 1.2rem; max-width: 62ch; margin-top: 22px; }
+.by { font-family: var(--f-mono); font-size: 0.85rem; color: var(--muted); margin: 0; }
+
+/* sections */
+.case { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 20px 44px; padding-block: 56px; border-top: 1px solid var(--rule); }
+.case > .label-col { min-width: 0; }
+.case > .body { min-width: 0; }
+.label-col .label { margin: 0 0 6px; }
+.label-col .stage { font-family: var(--f-display); font-style: italic; font-size: 1.05rem; color: var(--accent); margin: 0; }
+.body h2 { margin-bottom: 20px; }
+.body p, .body li { max-width: 66ch; }
+.body h3 { margin: 32px 0 10px; }
+.body ul, .body ol { padding-left: 1.2em; margin: 0 0 1em; }
+.body li { margin-bottom: 0.4em; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px 28px; margin: 24px 0 8px; padding: 0; list-style: none; }
+.facts li { margin: 0; max-width: none; border-top: 2px solid var(--accent); padding-top: 8px; font-size: 0.95rem; }
+.facts b { display: block; font-family: var(--f-display); font-weight: 500; font-size: 1.35rem; line-height: 1.2; }
+
+/* stage map */
+.stagemap { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 12px; align-items: stretch; margin: 28px 0 8px; }
+.stage-box { border: 1px solid var(--rule); background: var(--surface); padding: 16px; border-radius: 4px; min-width: 0; }
+.stage-box.dim { border-style: dashed; background: transparent; }
+.stage-box h3 { margin: 0 0 6px; font-size: 1.15rem; }
+.stage-box p { font-size: 0.92rem; color: var(--muted); max-width: none; margin-bottom: 10px; }
+.stage-box .chips { display: flex; flex-direction: column; gap: 6px; }
+.stage-box .chips a { font-size: 0.92rem; font-weight: 500; }
+.stage-box .chips span { font-family: var(--f-mono); font-size: 0.75rem; color: var(--muted); margin-left: 6px; }
+.arrow { align-self: center; color: var(--muted); font-family: var(--f-mono); }
+
+/* demo panels */
+.demo { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 20px; margin: 28px 0 8px; min-width: 0; }
+.demo > .label { margin: 0 0 4px; }
+.demo h3 { margin: 0 0 6px; }
+.demo .note { font-size: 0.9rem; color: var(--muted); max-width: none; }
+.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px 24px; margin: 16px 0; }
+.ctl { border: 0; padding: 0; margin: 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; font-size: 0.9rem; }
+.ctl label, .ctl legend { font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); padding: 0; display: flex; justify-content: space-between; gap: 8px; }
+.ctl output { color: var(--fg); }
+.ctl input[type="range"] { width: 100%; accent-color: var(--accent); margin: 4px 0; }
+.ctl select { font: inherit; font-size: 0.92rem; background: var(--bg); color: var(--fg); border: 1px solid var(--rule); border-radius: 4px; padding: 6px 8px; }
+.radios { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.radios label { font-family: var(--f-body); text-transform: none; letter-spacing: 0; font-size: 0.92rem; color: var(--fg); display: inline-flex; align-items: center; gap: 6px; }
+.radios input { accent-color: var(--accent); }
+.row { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; margin: 4px 0 12px; }
+.btn { font: inherit; font-weight: 500; font-size: 0.92rem; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 4px; padding: 9px 16px; cursor: pointer; }
+.btn:disabled { opacity: 0.5; cursor: default; }
+.btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+.status { font-family: var(--f-mono); font-size: 0.78rem; color: var(--muted); }
+.readout { font-size: 0.92rem; margin: 8px 0 0; max-width: none; }
+.scroll { overflow-x: auto; max-width: 100%; }
+
+/* validation loop */
+.loop { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; list-style: none; padding: 0; margin: 14px 0; counter-reset: s; }
+.loop li { margin: 0; max-width: none; border: 1px solid var(--rule); border-radius: 4px; padding: 8px 10px; font-size: 0.85rem; line-height: 1.35; background: var(--bg); transition: background 0.15s, border-color 0.15s; }
+.loop li.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.mm { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.mm th { text-align: left; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; padding: 6px 8px; border-bottom: 1px solid var(--rule); }
+.mm td { padding: 6px 8px; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+.mm td:first-child { font-family: var(--f-mono); font-size: 0.82rem; }
+.mm td.num { font-family: var(--f-mono); text-align: right; width: 5.5em; font-variant-numeric: tabular-nums; }
+.bar { height: 8px; background: var(--signal); border-radius: 2px; min-width: 0; transition: width 0.3s; }
+.bar.zero { background: transparent; }
+.okmark { font-family: var(--f-mono); font-size: 0.78rem; color: rgb(var(--good)); }
+
+/* chart */
+.chart { width: 100%; height: auto; display: block; margin-top: 8px; }
+.chart text { font-family: var(--f-mono); font-size: 11px; fill: var(--muted); }
+.chart .grid { stroke: var(--rule); stroke-width: 1; }
+.chart .zero { stroke: var(--fg); stroke-width: 1; stroke-dasharray: 4 3; opacity: 0.6; }
+.chart .b2 { fill: var(--band2); }
+.chart .b1 { fill: var(--band1); }
+.chart .shiftzone { fill: var(--signal); opacity: 0.06; }
+.chart .pt.in { fill: var(--fg); }
+.chart .pt.out1 { fill: var(--bg); stroke: var(--fg); stroke-width: 2; }
+.chart .pt.out2 { fill: var(--signal); stroke: var(--signal); }
+.chart .ztag { fill: var(--signal); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.82rem; color: var(--muted); margin-top: 8px; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; vertical-align: -1px; margin-right: 6px; }
+
+/* heatmap */
+.hm { border-collapse: separate; border-spacing: 2px; font-family: var(--f-mono); font-size: 0.76rem; min-width: 640px; width: 100%; }
+.hm th { font-weight: 500; color: var(--muted); font-size: 0.72rem; padding: 4px 2px; text-align: center; }
+.hm th.rowh { text-align: left; padding-right: 8px; white-space: nowrap; }
+.hm td { text-align: center; padding: 7px 2px; border-radius: 2px; font-variant-numeric: tabular-nums; background: var(--bg); }
+.hm tr.all td, .hm tr.all th { border-bottom: 2px solid var(--rule); }
+.hm td.thin { background-image: repeating-linear-gradient(45deg, var(--hatch) 0 2px, transparent 2px 6px); background-color: var(--bg) !important; color: var(--muted); font-style: italic; }
+.scale { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 0.8rem; color: var(--muted); margin-top: 10px; }
+.scale .strip { width: 160px; height: 10px; border-radius: 2px; }
+.scale .hatchkey { width: 22px; height: 12px; background-image: repeating-linear-gradient(45deg, var(--hatch) 0 2px, transparent 2px 6px); border: 1px solid var(--rule); }
+
+/* takeaways + table */
+.tshape { width: 100%; max-width: 380px; height: auto; margin: 8px 0 18px; }
+.tshape .t-wing { fill: var(--accent); fill-opacity: 0.2; stroke: var(--accent); stroke-width: 1.5; }
+.tshape .t-core { fill: var(--accent); }
+.tshape text { font-family: var(--f-body); font-size: 12.5px; }
+.tshape .l1 { fill: var(--fg); font-weight: 600; }
+.tshape .l2 { fill: var(--muted); }
+.tshape .c1 { fill: var(--accent-ink); font-weight: 600; }
+.tshape .c2 { fill: var(--accent-ink); }
+.map { width: 100%; border-collapse: collapse; font-size: 0.95rem; min-width: 560px; }
+.map th { text-align: left; font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--rule); }
+.map td { padding: 12px 12px 12px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.about { border-top: 1px solid var(--rule); padding-block: 32px 0; font-size: 0.9rem; color: var(--muted); max-width: 70ch; }
+
+@media (max-width: 860px) {
+  .case { grid-template-columns: minmax(0, 1fr); padding-block: 40px; }
+  .stagemap { grid-template-columns: minmax(0, 1fr); }
+  .arrow { transform: rotate(90deg); justify-self: center; }
+}
+@media (min-width: 861px) {
+  .label-col { position: sticky; top: calc(24px + env(safe-area-inset-top, 0px)); align-self: start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+
+<div class="wrap">
+  <header class="site">
+    <strong>Sam Pan</strong>
+    <nav aria-label="Sections">
+      <a href="#internship">The internship</a>
+      <a href="#p1">Project 1</a>
+      <a href="#p2">Project 2</a>
+      <a href="#p3">Project 3</a>
+      <a href="#takeaways">Takeaways</a>
+      <a href="#coursework">Coursework</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <p class="kicker">Immersion Vanderbilt culminating project · Internships pathway · RGA, summer 2026</p>
+    <h1>Telling noise from signal in life insurance experience</h1>
+    <p class="lede">Three projects from my summer on RGA's U.S. Individual Mortality experience studies team, what each one taught me, and working demos of the ideas. The demos run on synthetic data generated in your browser.</p>
+    <p class="by">Sam Pan · Vanderbilt University · Mathematics and Economics, Data Science minor</p>
+  </section>
+
+  <section class="case" id="internship">
+    <div class="label-col">
+      <p class="label">The internship</p>
+      <p class="stage">Weeks 1 to 9</p>
+    </div>
+    <div class="body">
+      <h2>How an experience study works, and where my projects sit</h2>
+      <p>An experience study compares the claims a life insurer actually paid with the claims its assumptions predicted. The team's process has three stages. Most of my work fell in the first and last. My manager's walkthrough sessions showed me how the middle stage connects to both.</p>
+      <p>One of the team's goals this year was to use more AI and automation to cut repetitive work and leave more time for higher-value analysis. Each of my projects reflects that goal.</p>
+
+      <div class="stagemap" role="group" aria-label="Where the three projects sit in an experience study">
+        <div class="stage-box">
+          <h3>Data cleaning</h3>
+          <p>Raw policy and claim records become life-level exposures.</p>
+          <div class="chips"><a href="#p1">Payout annuities conversion tool<span>weeks 1–2</span></a></div>
+        </div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="stage-box dim">
+          <h3>Study execution</h3>
+          <p>Actual claims are compared with expected claims. I learned this stage through walkthroughs rather than owning it.</p>
+        </div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="stage-box">
+          <h3>Results analysis</h3>
+          <p>Is the difference real, and what is driving it?</p>
+          <div class="chips">
+            <a href="#p2">Claims variance analysis<span>weeks 3–4</span></a>
+            <a href="#p3">Mortality seasonality research<span>weeks 5–9</span></a>
+          </div>
+        </div>
+      </div>
+
+      <h3>What I set out to learn</h3>
+      <p>A speaker at a team lunch and learn said technical skills like SQL are becoming the baseline because of AI. So on every project I tried to learn three things beyond the code:</p>
+      <ul>
+        <li><strong>Connection within the data:</strong> how each variable relates to the others.</li>
+        <li><strong>Connection across teams:</strong> how RGA's actuarial functions fit together.</li>
+        <li><strong>Understanding the business:</strong> the industry logic underneath the code.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROJECT 1 -->
+  <section class="case" id="p1">
+    <div class="label-col">
+      <p class="label">Project 1 · Weeks 1–2</p>
+      <p class="stage">Data cleaning</p>
+    </div>
+    <div class="body">
+      <h2>From a one-week migration to a few hours</h2>
+      <p>Each client study came with raw data, a target output to match, and roughly 1,000 lines of Python that cleaned the data. My job was to rebuild that logic as SQL in Snowflake.</p>
+      <p>Payout annuities pay income for life, so a study measures how long each life was at risk and whether the person died in the observation window. A joint-life contract produces two lives. The second life's exposure starts only after the first life dies and any guarantee period ends. Escalating pensions, deletion rules for invalid exposures, and risk banding by benefit size all had to be reproduced exactly.</p>
+      <p>I did the first migration by hand, which took about a week. Then I built a Claude skill in Snowflake that generalizes the work into the loop below and repeats it until every column matches the target output.</p>
+
+      <div class="demo" id="loop-demo">
+        <p class="label">Demo · Validation loop</p>
+        <h3>Run the loop until every column matches</h3>
+        <ol class="loop" id="loop-steps">
+          <li>Convert Python to SQL</li>
+          <li>Run the code</li>
+          <li>Compare against the target output</li>
+          <li>Tabulate mismatches per column</li>
+          <li>Backtrack to the source variable and debug</li>
+          <li>Iterate until every column matches</li>
+        </ol>
+        <div class="row">
+          <button class="btn" id="loop-run" type="button">Run next iteration</button>
+          <button class="btn ghost" id="loop-reset" type="button">Reset</button>
+          <span class="status" id="loop-status" role="status">Iteration 0 of 4</span>
+        </div>
+        <div class="scroll">
+          <table class="mm" aria-label="Mismatching rows per column">
+            <thead><tr><th>Column</th><th>Mismatching rows</th><th></th><th></th></tr></thead>
+            <tbody id="loop-body"></tbody>
+          </table>
+        </div>
+        <p class="readout" id="loop-note"></p>
+        <p class="note">Illustrative run on synthetic data. The counts are invented. The loop is the real method.</p>
+      </div>
+
+      <h3>The hardest part</h3>
+      <p>Some rules existed only in the data. I had to infer an undocumented, client-specific rule by sampling individual rows and working out the expected values by hand, then confirm the fix against every affected column.</p>
+
+      <h3>Result</h3>
+      <ul class="facts">
+        <li><b>About a week to a few hours</b>to migrate a new client's study</li>
+        <li><b>Minutes to seconds</b>to run a converted study, with no manual file handling</li>
+        <li><b>Matches the target</b>on every logic-driven column, with documentation for future users</li>
+      </ul>
+
+      <h3>What I learned</h3>
+      <p>Translating code is the easy half. The real work is recovering the business rules hidden inside it, and a systematic validation loop is what makes that recoverable. I also learned to separate two kinds of time savings: the one-time effort of migrating and the recurring runtime of the pipeline.</p>
+    </div>
+  </section>
+
+  <!-- PROJECT 2 -->
+  <section class="case" id="p2">
+    <div class="label-col">
+      <p class="label">Project 2 · Weeks 3–4</p>
+      <p class="stage">Results analysis</p>
+    </div>
+    <div class="body">
+      <h2>How much claim variation is just luck?</h2>
+      <p>Actuaries need to know whether a month's claims are bad luck or a real shift in experience. The team already used Monte Carlo simulation to model expected variation, but running it depended on manual, fragmented Excel and SQL steps. My role was to optimize that workflow.</p>
+      <p>I rebuilt it as a single Snowflake notebook that runs the whole chain in one click. It simulates 1,000 scenarios across 21 time windows and four claim segments, builds the expected-versus-simulated reference table, computes actual-to-expected results (A/E), and plots them against bands at one and two standard deviations. The output supports a monthly financial issues meeting, and the notebook rolls forward to the latest complete month on its own.</p>
+
+      <h3>How the simulation works</h3>
+      <p>Each insured gets one probabilistic trial per scenario, with the expected claim probability as the chance of a claim. The claim amount counts only when the trial fires. Repeating this across many scenarios gives a distribution of plausible outcomes. Plotting actual results against that distribution shows at a glance whether a result is ordinary or unusual.</p>
+
+      <div class="demo" id="mc-demo">
+        <p class="label">Demo · Monte Carlo bands</p>
+        <h3>Build a book, simulate it, then change mortality</h3>
+        <p class="note">Years 1 and 2 follow the expected claim rate. In year 3, mortality shifts by the amount you choose. A real shift should push points toward and past the bands. A small one hides inside them.</p>
+        <div class="controls" id="mc-controls">
+          <div class="ctl"><label for="mc-n">Policies in the book <output id="mc-n-o"></output></label><input type="range" id="mc-n" min="2000" max="20000" step="2000" value="10000"></div>
+          <div class="ctl"><label for="mc-rate">Annual claim rate <output id="mc-rate-o"></output></label><input type="range" id="mc-rate" min="0.2" max="2" step="0.1" value="1"></div>
+          <div class="ctl"><label for="mc-shift">Mortality shift in year 3 <output id="mc-shift-o"></output></label><input type="range" id="mc-shift" min="0" max="60" step="5" value="40"></div>
+          <div class="ctl"><label for="mc-scen">Simulated scenarios</label>
+            <select id="mc-scen"><option value="200">200</option><option value="500" selected>500</option><option value="1000">1,000</option></select></div>
+          <fieldset class="ctl"><legend>Claim segment</legend>
+            <div class="radios">
+              <label><input type="radio" name="mc-seg" value="all" checked> All</label>
+              <label><input type="radio" name="mc-seg" value="nonlarge"> Non-large</label>
+              <label><input type="radio" name="mc-seg" value="large"> Large</label>
+            </div></fieldset>
+          <fieldset class="ctl"><legend>Reporting window</legend>
+            <div class="radios">
+              <label><input type="radio" name="mc-per" value="month"> Month</label>
+              <label><input type="radio" name="mc-per" value="quarter" checked> Quarter</label>
+              <label><input type="radio" name="mc-per" value="year"> Year</label>
+            </div></fieldset>
+        </div>
+        <div class="row">
+          <button class="btn" id="mc-redraw" type="button">Draw another three years</button>
+          <span class="status" id="mc-status" role="status">Simulating…</span>
+        </div>
+        <svg class="chart" id="mc-chart" viewBox="0 0 720 340" role="img" aria-label="Actual-to-expected percentage by period, plotted against Monte Carlo bands"></svg>
+        <div class="legend">
+          <span><i style="background:var(--band1)"></i>±1σ band</span>
+          <span><i style="background:var(--band2)"></i>±2σ band</span>
+          <span><i style="background:var(--signal)"></i>Outside ±2σ</span>
+        </div>
+        <p class="readout" id="mc-read" aria-live="polite"></p>
+        <p class="note">Synthetic book of policies with a skewed face amount distribution. "Large" means the top 3% by face amount. Band width is the simulated standard deviation divided by the simulated mean, so it reads as a percentage of plan. A/E% is actual minus expected, as a percentage of expected.</p>
+      </div>
+
+      <h3>Design choices worth explaining</h3>
+      <ul>
+        <li>The simulation runs once a year because it is expensive. Reporting runs on demand. Separating the two keeps the notebook fast.</li>
+        <li>Simulated spread is rescaled relative to plan, so the bands answer the question the business asks: how far can actual land from budget by chance alone?</li>
+        <li>Large policies are analyzed as their own segment, because one large claim can dominate a month. Try the segment control in the demo.</li>
+      </ul>
+      <p>The simulation captures process variance, the randomness of whether a claim occurs. It does not capture parameter variance, the uncertainty in the assumptions themselves. Knowing what a model leaves out matters as much as knowing what it shows.</p>
+
+      <h3>Result</h3>
+      <ul class="facts">
+        <li><b>About 75% less time</b>spent on this analysis each year</li>
+        <li><b>One click</b>from simulation to charts, with no manual date edits</li>
+        <li><b>Feeds a monthly meeting</b>on financial issues</li>
+      </ul>
+
+      <h3>What I learned</h3>
+      <p>A good monitoring tool answers a decision-maker's question directly. The statistics were the easier part. Making them readable, self-updating, and honest about what they cover is what made the tool usable.</p>
+    </div>
+  </section>
+
+  <!-- PROJECT 3 -->
+  <section class="case" id="p3">
+    <div class="label-col">
+      <p class="label">Project 3 · Weeks 5–9</p>
+      <p class="stage">Results analysis</p>
+    </div>
+    <div class="body">
+      <h2>Does mortality follow the seasons, and for whom?</h2>
+      <p>My longest project had two phases. I delivered each as an interactive dashboard in Snowflake, built with Streamlit and Python.</p>
+
+      <h3>Phase 1: RGA compared with the industry</h3>
+      <p>The team wanted to know whether RGA's book shows the same seasonal pattern as the life insurance industry, and whether the pattern changed after COVID. I followed a 2012 RGA study of death benefit A/E by quarter and pulled industry data from Capital IQ. While reviewing the method, I found that expected values could be distorted by in-year growth. I refined the approach by expressing each quarter as a share of annual mortality, which removes that bias. A dashboard with two independent panels let the team compare methods and sets of years side by side. It also exposed a data timing issue that explained one surprising pattern: claims reported later than expected were landing in the following quarter.</p>
+
+      <h3>Phase 2: insured compared with the general population</h3>
+      <p>The second question was how insured mortality seasonality compares with the general population. I built a heatmap dashboard that sits alongside the existing Power BI visuals for the general population. Users filter by sex, age, year, and cause of death, and can grey out cells with too few deaths to trust, a common problem with insured data. The research was preliminary when I presented. I shared early observations as hypotheses for further study.</p>
+
+      <div class="demo" id="hm-demo">
+        <p class="label">Demo · Seasonality heatmap</p>
+        <h3>Filter a synthetic mortality table</h3>
+        <p class="note">Each cell shows a month's share of the year's deaths. A flat year would put every month at 8.3%. The insured series is a small, underwritten group, so thin cells appear. Raise the minimum deaths to see them grey out.</p>
+        <div class="controls" id="hm-controls">
+          <fieldset class="ctl"><legend>Population</legend>
+            <div class="radios">
+              <label><input type="radio" name="hm-pop" value="gen" checked> General</label>
+              <label><input type="radio" name="hm-pop" value="ins"> Insured</label>
+              <label><input type="radio" name="hm-pop" value="diff"> Difference</label>
+            </div></fieldset>
+          <fieldset class="ctl"><legend>Granularity</legend>
+            <div class="radios">
+              <label><input type="radio" name="hm-gran" value="month" checked> Monthly</label>
+              <label><input type="radio" name="hm-gran" value="quarter"> Quarterly</label>
+            </div></fieldset>
+          <div class="ctl"><label for="hm-sex">Sex</label>
+            <select id="hm-sex"><option value="all">All</option><option value="0">Male</option><option value="1">Female</option></select></div>
+          <div class="ctl"><label for="hm-cause">Cause of death</label><select id="hm-cause"></select></div>
+          <div class="ctl"><label for="hm-y0">From year</label><select id="hm-y0"></select></div>
+          <div class="ctl"><label for="hm-y1">To year</label><select id="hm-y1"></select></div>
+          <div class="ctl"><label for="hm-min">Grey out cells under <output id="hm-min-o"></output></label><input type="range" id="hm-min" min="0" max="300" step="10" value="50"></div>
+          <div class="ctl"><label for="hm-sel">Insured winter peak reduced by <output id="hm-sel-o"></output></label><input type="range" id="hm-sel" min="0" max="60" step="5" value="30"></div>
+        </div>
+        <div class="scroll">
+          <table class="hm" id="hm-table" aria-label="Share of deaths by age band and month"></table>
+        </div>
+        <div class="scale" id="hm-scale"></div>
+        <p class="readout" id="hm-read" aria-live="polite"></p>
+        <p class="note">Synthetic data. Counts, seasonal shapes, and the selection effect are generated in your browser from simple assumptions. They are not RGA's data and not RGA's results, and they are not real U.S. mortality statistics. The selection slider is a modeling assumption you control.</p>
+      </div>
+
+      <h3>What I learned</h3>
+      <ul>
+        <li>A finding only has impact if the people who need it can explore it. The dashboards let the team test their own questions instead of reading a static report.</li>
+        <li>Check reporting lags before interpreting a seasonal pattern. A surprising quarter can be a timing artifact.</li>
+        <li>Small cells mislead. Cuts by age and cause leave some groups with very few deaths, so thin cells need to be flagged instead of read as signal.</li>
+        <li>Insured lives are underwritten, so differences from the general population reflect selection as well as seasonality.</li>
+      </ul>
+      <p>Internal, industry, and population data come from different sources with different structure and granularity. Making them comparable took more effort than the analysis itself.</p>
+    </div>
+  </section>
+
+  <!-- TAKEAWAYS -->
+  <section class="case" id="takeaways">
+    <div class="label-col">
+      <p class="label">Takeaways</p>
+      <p class="stage">Across all three</p>
+    </div>
+    <div class="body">
+      <h2>What the internship taught me</h2>
+
+      <h3>A T-shaped skillset</h3>
+      <svg class="tshape" viewBox="0 0 360 232" role="img" aria-label="A T shape. The horizontal bar is breadth across actuarial functions. The vertical stem is depth in math, SQL and experience studies.">
+        <rect class="t-wing" x="12" y="12" width="336" height="64" rx="3"/>
+        <text class="l1" x="180" y="40" text-anchor="middle">Breadth</text>
+        <text class="l2" x="180" y="60" text-anchor="middle">collaborating across actuarial functions</text>
+        <rect class="t-core" x="115" y="76" width="130" height="144" rx="3"/>
+        <text class="c1" x="180" y="128" text-anchor="middle">Depth</text>
+        <text class="c2" x="180" y="152" text-anchor="middle">math, SQL,</text>
+        <text class="c2" x="180" y="170" text-anchor="middle">experience studies</text>
+      </svg>
+      <p>The vertical stroke is deep expertise in your own area. The horizontal stroke is the ability to collaborate across actuarial functions and other departments. I came in with depth in math and data work, and the summer pushed me to build breadth in how RGA's functions connect: how treaty terms define an observation window, how claims monitoring feeds financial reporting, and how a study's assumptions flow into pricing and reserving. Depth gets the work done. Breadth tells you which work is worth doing.</p>
+
+      <h3>Reaching out</h3>
+      <p>I was hesitant at first, worried that reaching out would come across as insincere. I learned that when you are genuinely curious about what someone does, they notice and are glad to help. That led to the best experiences of my summer, including projects with people outside my team and shadowing in other actuarial functions I am interested in.</p>
+
+      <h3>Working with AI as an actuary</h3>
+      <p>On the conversion tool, AI sped up the mechanical translation, but the value came from a validation loop that checked every column against known output. Experience studies inform pricing and reserving, so an unverified shortcut is not acceptable. AI changes how fast the work moves. The accountability for getting it right stays with the actuary.</p>
+
+      <h3>Habits I am taking with me</h3>
+      <ul>
+        <li>Understand the business rule before writing the code that implements it.</li>
+        <li>Validate against a known answer before trusting any output.</li>
+        <li>Design outputs for the person who has to make a decision with them.</li>
+        <li>Ask early, and ask people outside my immediate team.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- COURSEWORK -->
+  <section class="case" id="coursework">
+    <div class="label-col">
+      <p class="label">Coursework</p>
+      <p class="stage">And what comes next</p>
+    </div>
+    <div class="body">
+      <h2>Where the classroom ideas showed up</h2>
+      <div class="scroll">
+        <table class="map">
+          <thead><tr><th>Internship work</th><th>Course idea</th><th>Where it appears</th></tr></thead>
+          <tbody>
+            <tr><td>Monte Carlo claims simulation</td><td>Bernoulli trials, simulation, and the normal approximation behind one and two standard deviation bands</td><td>Probability (MATH 3640)</td></tr>
+            <tr><td>Payout annuity exposures, escalating pensions, guarantee periods</td><td>Annuities, compounding, and the time structure of cash flows</td><td>Financial Mathematics (MATH 3650)</td></tr>
+            <tr><td>Insured versus general population mortality</td><td>Selection effects: insured lives are underwritten, so they differ from the population they are compared with</td><td>Economics</td></tr>
+            <tr><td>Python to SQL conversion, Streamlit dashboards, A/E charts</td><td>Querying, transforming, validating, and visualizing data</td><td>Data Science minor</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:20px">In class, the assumptions are given. At RGA, deciding which assumptions are reasonable, and checking them against data, was most of the job.</p>
+
+      <h3>Looking ahead</h3>
+      <p>I accepted a full-time offer to return to RGA in St. Louis, starting in February 2027. My goal is to become a credentialed actuary. I have passed Exams P and FM and am preparing for SRM.</p>
+    </div>
+  </section>
+
+  <footer class="about">
+    <p><strong>About the data on this page.</strong> The three demos use synthetic data generated in your browser. No RGA data, client names, code, or internal results appear here. The page describes methods and my own learning from an internship completed in summer 2026.</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var reduceMotion = false;
+  try { reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) {}
+
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function gaussFrom(rng) {
+    return function () {
+      var u = 0, v;
+      while (u === 0) u = rng();
+      v = rng();
+      return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+    };
+  }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+
+  /* ---------- Demo 1: validation loop ---------- */
+  var LOOP_COLS = ['entry_date', 'exit_age', 'escalation_count', 'risk_band', 'life_type', 'exposure_years'];
+  var LOOP_ITERS = [
+    { c: [412, 138, 1290, 207, 64, 355], note: 'First draft converted. Every column is compared with the target output.' },
+    { c: [96, 138, 1290, 207, 0, 120], note: 'Traced life_type and entry_date mismatches to how the second life’s start is derived.' },
+    { c: [0, 138, 1290, 207, 0, 18], note: 'Traced the remaining entry_date mismatches to guarantee-period handling.' },
+    { c: [0, 138, 0, 9, 0, 18], note: 'Inferred an undocumented rule for escalation dates from sampled rows. Dependent risk bands improved too.' },
+    { c: [0, 0, 0, 0, 0, 0], note: 'Fixed age rounding. All columns match the target output.' }
+  ];
+  var loopI = 0, loopBusy = false;
+  function renderLoop() {
+    var it = LOOP_ITERS[loopI], max = 1290, html = '';
+    for (var k = 0; k < LOOP_COLS.length; k++) {
+      var v = it.c[k];
+      html += '<tr><td>' + LOOP_COLS[k] + '</td><td class="num">' + v.toLocaleString('en-US') + '</td>' +
+        '<td style="width:40%"><div class="bar' + (v === 0 ? ' zero' : '') + '" style="width:' + (v === 0 ? 0 : Math.max(3, v / max * 100)) + '%"></div></td>' +
+        '<td>' + (v === 0 ? '<span class="okmark">matches</span>' : '') + '</td></tr>';
+    }
+    $('#loop-body').innerHTML = html;
+    $('#loop-note').textContent = it.note;
+    $('#loop-status').textContent = 'Iteration ' + loopI + ' of ' + (LOOP_ITERS.length - 1);
+    $('#loop-run').disabled = loopBusy || loopI >= LOOP_ITERS.length - 1;
+  }
+  function highlight(k) {
+    $$('#loop-steps li').forEach(function (li, j) { li.classList.toggle('on', j === k); });
+  }
+  function runLoop() {
+    if (loopBusy || loopI >= LOOP_ITERS.length - 1) return;
+    if (reduceMotion) { loopI++; renderLoop(); return; }
+    loopBusy = true; $('#loop-run').disabled = true;
+    var k = 0;
+    (function step() {
+      highlight(k);
+      if (k < 5) { k++; setTimeout(step, 240); }
+      else { setTimeout(function () { highlight(-1); loopI++; loopBusy = false; renderLoop(); }, 260); }
+    })();
+  }
+  $('#loop-run').addEventListener('click', runLoop);
+  $('#loop-reset').addEventListener('click', function () { loopBusy = false; highlight(-1); loopI = 0; renderLoop(); });
+  renderLoop();
+
+  /* ---------- Demo 2: Monte Carlo bands ---------- */
+  var MC = { n: 10000, rate: 1, scen: 500, shift: 40, seg: 'all', per: 'quarter', draw: 1 };
+  var mcPop = null, mcSim = null, mcSimKey = '', mcTimer = null;
+
+  function buildPop(n) {
+    var g = gaussFrom(mulberry32(11)), face = new Float64Array(n), w = new Float64Array(n), i;
+    for (i = 0; i < n; i++) { face[i] = Math.exp(Math.log(150) + 0.7 * g()); w[i] = Math.exp(0.6 * g() - 0.18); }
+    var sorted = Float64Array.from(face).sort();
+    return { n: n, face: face, w: w, thr: sorted[Math.floor(n * 0.97)] };
+  }
+  function segIdx(pop, seg) {
+    var out = [], i;
+    for (i = 0; i < pop.n; i++) {
+      var large = pop.face[i] >= pop.thr;
+      if (seg === 'all' || (seg === 'large' && large) || (seg === 'nonlarge' && !large)) out.push(i);
+    }
+    return Int32Array.from(out);
+  }
+  function simulate(pop, idx, rate, S) {
+    var L = idx.length, p = new Float64Array(L), f = new Float64Array(L), plan = 0, k;
+    for (k = 0; k < L; k++) {
+      var i = idx[k];
+      p[k] = Math.min(0.5, rate / 100 * pop.w[i] / 12);
+      f[k] = pop.face[i];
+      plan += p[k] * f[k];
+    }
+    var tot = new Float64Array(S * 12), x = 0x9E3779B9 | 0, s, m, t;
+    for (s = 0; s < S; s++) {
+      for (m = 0; m < 12; m++) {
+        t = 0;
+        for (k = 0; k < L; k++) {
+          x ^= x << 13; x ^= x >>> 17; x ^= x << 5;
+          if (((x >>> 0) / 4294967296) < p[k]) t += f[k];
+        }
+        tot[s * 12 + m] = t;
+      }
+    }
+    return { tot: tot, plan: plan, p: p, f: f, L: L, S: S };
+  }
+  function bandCV(sim, per) {
+    var k = per === 'month' ? 1 : per === 'quarter' ? 3 : 12, nW = 12 / k, vals = [], s, w, j;
+    for (s = 0; s < sim.S; s++) {
+      for (w = 0; w < nW; w++) {
+        var sum = 0;
+        for (j = 0; j < k; j++) sum += sim.tot[s * 12 + w * k + j];
+        vals.push(sum);
+      }
+    }
+    var mean = 0, v = 0, i;
+    for (i = 0; i < vals.length; i++) mean += vals[i];
+    mean /= vals.length;
+    for (i = 0; i < vals.length; i++) v += (vals[i] - mean) * (vals[i] - mean);
+    var sd = Math.sqrt(v / vals.length);
+    return mean > 0 ? sd / mean : 0;
+  }
+  function drawActual(sim, shift, seed) {
+    var rng = mulberry32(1000 + seed * 7919), out = new Float64Array(36), t, k;
+    for (t = 0; t < 36; t++) {
+      var mult = t >= 24 ? 1 + shift / 100 : 1, tt = 0;
+      for (k = 0; k < sim.L; k++) if (rng() < Math.min(1, sim.p[k] * mult)) tt += sim.f[k];
+      out[t] = tt;
+    }
+    return out;
+  }
+  function niceStep(raw) {
+    var pow = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10)), c = [1, 2, 2.5, 5, 10], i;
+    for (i = 0; i < c.length; i++) if (c[i] * pow >= raw) return c[i] * pow;
+    return 10 * pow;
+  }
+  function fmtPct(v) { var r = Math.round(v * 10) / 10; return (r > 0 ? '+' : r < 0 ? '−' : '') + Math.abs(r) + '%'; }
+
+  function mcPoints() {
+    var k = MC.per === 'month' ? 1 : MC.per === 'quarter' ? 3 : 12, actual = drawActual(mcSim, MC.shift, MC.draw), pts = [], w, j;
+    for (w = 0; w < 36 / k; w++) {
+      var sum = 0;
+      for (j = 0; j < k; j++) sum += actual[w * k + j];
+      var exp = k * mcSim.plan;
+      pts.push(exp > 0 ? (sum - exp) / exp * 100 : 0);
+    }
+    return pts;
+  }
+  function renderMC() {
+    var pts = mcPoints(), cv = bandCV(mcSim, MC.per), b1 = cv * 100, b2 = cv * 200, i;
+    var W = 720, H = 340, ml = 54, mr = 14, mt = 16, mb = 44, iw = W - ml - mr, ih = H - mt - mb;
+    var peak = b2;
+    for (i = 0; i < pts.length; i++) peak = Math.max(peak, Math.abs(pts[i]));
+    peak = Math.max(peak * 1.12, 1);
+    var step = niceStep(peak / 3), top = Math.ceil(peak / step) * step;
+    var y = function (v) { return mt + ih / 2 - v / top * ih / 2; };
+    var n = pts.length, x = function (i) { return ml + (i + 0.5) / n * iw; };
+    var s = '';
+    if (MC.shift > 0) s += '<rect class="shiftzone" x="' + (ml + iw * 2 / 3) + '" y="' + mt + '" width="' + (iw / 3) + '" height="' + ih + '"/>';
+    s += '<rect class="b2" x="' + ml + '" y="' + y(b2) + '" width="' + iw + '" height="' + Math.max(0, y(-b2) - y(b2)) + '"/>';
+    s += '<rect class="b1" x="' + ml + '" y="' + y(b1) + '" width="' + iw + '" height="' + Math.max(0, y(-b1) - y(b1)) + '"/>';
+    for (var tv = -top; tv <= top + step / 2; tv += step) {
+      var v = Math.round(tv / step) * step;
+      s += '<line class="grid" x1="' + ml + '" x2="' + (W - mr) + '" y1="' + y(v) + '" y2="' + y(v) + '" opacity="0.5"/>';
+      s += '<text x="' + (ml - 8) + '" y="' + (y(v) + 4) + '" text-anchor="end">' + (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(Math.round(v * 10) / 10) + '%</text>';
+    }
+    s += '<line class="zero" x1="' + ml + '" x2="' + (W - mr) + '" y1="' + y(0) + '" y2="' + y(0) + '"/>';
+    for (i = 1; i < 3; i++) s += '<line class="grid" x1="' + (ml + iw * i / 3) + '" x2="' + (ml + iw * i / 3) + '" y1="' + mt + '" y2="' + (mt + ih) + '"/>';
+    for (i = 0; i < 3; i++) s += '<text x="' + (ml + iw * (i + 0.5) / 3) + '" y="' + (H - 18) + '" text-anchor="middle">Year ' + (i + 1) + '</text>';
+    if (MC.shift > 0) s += '<text class="ztag" x="' + (ml + iw * 5 / 6) + '" y="' + (mt + 14) + '" text-anchor="middle">mortality +' + MC.shift + '%</text>';
+    var out2 = [0, 0], tot = [0, 0], r = MC.per === 'month' ? 3 : 4.5;
+    for (i = 0; i < n; i++) {
+      var a = Math.abs(pts[i]), cls = a > b2 ? 'out2' : a > b1 ? 'out1' : 'in', yr = i < n * 2 / 3 ? 0 : 1;
+      tot[yr]++; if (a > b2) out2[yr]++;
+      s += '<circle class="pt ' + cls + '" cx="' + x(i) + '" cy="' + y(pts[i]) + '" r="' + r + '"><title>' + fmtPct(pts[i]) + ' A/E</title></circle>';
+    }
+    $('#mc-chart').innerHTML = s;
+    var unit = MC.per === 'month' ? 'month' : MC.per === 'quarter' ? 'quarter' : 'year';
+    $('#mc-read').textContent = 'Bands for a single ' + unit + ': ±1σ = ±' + b1.toFixed(0) + '%, ±2σ = ±' + b2.toFixed(0) + '% of plan. ' +
+      'Years 1 and 2 (no shift): ' + out2[0] + ' of ' + tot[0] + ' points outside ±2σ. Year 3 (shift of ' + MC.shift + '%): ' + out2[1] + ' of ' + tot[1] + '.';
+  }
+  function readMC() {
+    MC.n = +$('#mc-n').value; MC.rate = +$('#mc-rate').value; MC.shift = +$('#mc-shift').value; MC.scen = +$('#mc-scen').value;
+    MC.seg = $('input[name="mc-seg"]:checked').value; MC.per = $('input[name="mc-per"]:checked').value;
+    $('#mc-n-o').textContent = MC.n.toLocaleString('en-US');
+    $('#mc-rate-o').textContent = MC.rate.toFixed(1) + '%';
+    $('#mc-shift-o').textContent = '+' + MC.shift + '%';
+  }
+  function updateMC() {
+    readMC();
+    var key = [MC.n, MC.rate, MC.scen, MC.seg].join('|');
+    if (key !== mcSimKey) {
+      if (!mcPop || mcPop.n !== MC.n) mcPop = buildPop(MC.n);
+      mcSim = simulate(mcPop, segIdx(mcPop, MC.seg), MC.rate, MC.scen);
+      mcSimKey = key;
+    }
+    renderMC();
+    $('#mc-status').textContent = MC.scen.toLocaleString('en-US') + ' scenarios simulated';
+  }
+  function scheduleMC() {
+    $('#mc-status').textContent = 'Simulating…';
+    clearTimeout(mcTimer);
+    mcTimer = setTimeout(updateMC, 120);
+  }
+  $('#mc-controls').addEventListener('input', scheduleMC);
+  $('#mc-controls').addEventListener('change', scheduleMC);
+  $('#mc-redraw').addEventListener('click', function () { MC.draw++; scheduleMC(); });
+  readMC();
+  mcTimer = setTimeout(updateMC, 40);
+
+  /* ---------- Demo 3: seasonality heatmap ---------- */
+  var AGES = ['0–24', '25–44', '45–59', '60–74', '75–84', '85+'];
+  var CAUSES = ['Cancer', 'Cardiovascular', 'Respiratory', 'Diabetes', 'Accidents', 'Other'];
+  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var DAYS = [31, 28.25, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  var Y0 = 2011, NY = 15;
+  var BASE = [50000, 120000, 280000, 700000, 800000, 1000000];
+  var INS_SCALE = [0.0006, 0.003, 0.0045, 0.003, 0.0009, 0.00025];
+  var AGE_AMP = [0.03, 0.04, 0.06, 0.09, 0.12, 0.15];
+  var CAUSE_MUL = [0.3, 1.2, 2.0, 1.0, -0.6, 0.8];
+  var CAUSE_SHARE = [
+    [0.04, 0.05, 0.02, 0.01, 0.45, 0.43],
+    [0.10, 0.12, 0.03, 0.03, 0.30, 0.42],
+    [0.30, 0.22, 0.05, 0.05, 0.07, 0.31],
+    [0.32, 0.25, 0.08, 0.06, 0.02, 0.27],
+    [0.22, 0.30, 0.09, 0.05, 0.01, 0.33],
+    [0.13, 0.35, 0.10, 0.04, 0.01, 0.37]
+  ];
+  var MALE = [0.70, 0.62, 0.56, 0.54, 0.46, 0.36];
+
+  function poisson(rng, g, lam) {
+    if (lam <= 0) return 0;
+    if (lam < 40) { var L = Math.exp(-lam), k = 0, p = 1; do { k++; p *= rng(); } while (p > L); return k - 1; }
+    return Math.max(0, Math.round(lam + Math.sqrt(lam) * g()));
+  }
+  function cellIndex(y, sx, a, c, m) { return ((((y * 2 + sx) * 6 + a) * 6 + c) * 12 + m); }
+  function genData(kind, sel) {
+    var rng = mulberry32(kind ? 77 : 55), g = gaussFrom(rng), arr = new Float32Array(NY * 2 * 6 * 6 * 12), y, sx, a, c, m;
+    for (y = 0; y < NY; y++) for (sx = 0; sx < 2; sx++) for (a = 0; a < 6; a++) for (c = 0; c < 6; c++) {
+      var annual = BASE[a] * (sx === 0 ? MALE[a] : 1 - MALE[a]) * CAUSE_SHARE[a][c] * (kind ? INS_SCALE[a] : 1);
+      var amp = AGE_AMP[a] * CAUSE_MUL[c] * (kind ? 1 - sel : 1);
+      for (m = 0; m < 12; m++) {
+        var lam = annual / 365.25 * DAYS[m] * (1 + amp * Math.cos(2 * Math.PI * m / 12));
+        arr[cellIndex(y, sx, a, c, m)] = poisson(rng, g, lam);
+      }
+    }
+    return arr;
+  }
+  var HM = { gen: genData(0, 0), ins: null, selUsed: -1 };
+
+  function aggregate(data, f) {
+    var rows = [], r, y, sx, a, c, m;
+    for (r = 0; r < 7; r++) rows.push(new Float64Array(12));
+    for (y = f.y0 - Y0; y <= f.y1 - Y0; y++) for (sx = 0; sx < 2; sx++) {
+      if (f.sex !== 'all' && +f.sex !== sx) continue;
+      for (a = 0; a < 6; a++) for (c = 0; c < 6; c++) {
+        if (f.cause !== 'all' && +f.cause !== c) continue;
+        for (m = 0; m < 12; m++) { var v = data[cellIndex(y, sx, a, c, m)]; rows[a + 1][m] += v; rows[0][m] += v; }
+      }
+    }
+    return rows;
+  }
+  function gran(row, q) {
+    if (!q) return Array.prototype.slice.call(row);
+    return [0, 1, 2, 3].map(function (i) { return row[i * 3] + row[i * 3 + 1] + row[i * 3 + 2]; });
+  }
+  function sumArr(a) { var s = 0, i; for (i = 0; i < a.length; i++) s += a[i]; return s; }
+
+  function initHM() {
+    var yh = '', i;
+    for (i = 0; i < NY; i++) yh += '<option value="' + (Y0 + i) + '">' + (Y0 + i) + '</option>';
+    $('#hm-y0').innerHTML = yh; $('#hm-y1').innerHTML = yh;
+    $('#hm-y0').value = Y0; $('#hm-y1').value = Y0 + NY - 1;
+    var ch = '<option value="all">All causes</option>';
+    for (i = 0; i < CAUSES.length; i++) ch += '<option value="' + i + '">' + CAUSES[i] + '</option>';
+    $('#hm-cause').innerHTML = ch;
+  }
+  function renderHM() {
+    var pop = $('input[name="hm-pop"]:checked').value, q = $('input[name="hm-gran"]:checked').value === 'quarter';
+    var f = { sex: $('#hm-sex').value, cause: $('#hm-cause').value, y0: +$('#hm-y0').value, y1: +$('#hm-y1').value };
+    var minD = +$('#hm-min').value, sel = +$('#hm-sel').value / 100;
+    $('#hm-min-o').textContent = minD + ' deaths';
+    $('#hm-sel-o').textContent = Math.round(sel * 100) + '%';
+    if (HM.selUsed !== sel) { HM.ins = genData(1, sel); HM.selUsed = sel; }
+    var gen = aggregate(HM.gen, f), ins = aggregate(HM.ins, f), ncol = q ? 4 : 12, base = 100 / ncol;
+    var heads = q ? ['Q1', 'Q2', 'Q3', 'Q4'] : MONTHS;
+    var h = '<thead><tr><th class="rowh">Age</th>' + heads.map(function (t) { return '<th>' + t + '</th>'; }).join('') + '</tr></thead><tbody>';
+    var thin = 0, cells = 0, r, m;
+    for (r = 0; r < 7; r++) {
+      var gR = gran(gen[r], q), iR = gran(ins[r], q), gS = sumArr(gR), iS = sumArr(iR);
+      h += '<tr' + (r === 0 ? ' class="all"' : '') + '><th class="rowh">' + (r === 0 ? 'All ages' : AGES[r - 1]) + '</th>';
+      for (m = 0; m < ncol; m++) {
+        var gShare = gS > 0 ? gR[m] / gS * 100 : NaN, iShare = iS > 0 ? iR[m] / iS * 100 : NaN, val, cnt, d, text, style = '', cls = '';
+        if (pop === 'gen') { val = gShare; cnt = gR[m]; }
+        else if (pop === 'ins') { val = iShare; cnt = iR[m]; }
+        else { val = iShare - gShare; cnt = iR[m]; }
+        cells++;
+        if (isNaN(val)) { text = '–'; cls = 'thin'; }
+        else {
+          if (pop === 'diff') {
+            d = val; text = (d >= 0 ? '+' : '−') + Math.abs(d).toFixed(1) + 'pp';
+            var a1 = Math.min(1, Math.abs(d) / (q ? 3 : 1.5)) * 0.6;
+            style = 'background:rgba(var(' + (d > 0 ? '--bad' : '--good') + '),' + a1.toFixed(2) + ')';
+          } else {
+            d = val - base; text = val.toFixed(1) + '%';
+            var a2 = Math.min(1, Math.abs(d) / (q ? 4 : 2)) * 0.6;
+            style = 'background:rgba(var(' + (d > 0 ? '--hot' : '--cold') + '),' + a2.toFixed(2) + ')';
+          }
+          if (cnt < minD) { cls = 'thin'; thin++; style = ''; }
+        }
+        h += '<td class="' + cls + '" style="' + style + '" title="' + Math.round(cnt).toLocaleString('en-US') + ' deaths in this cell">' + text + '</td>';
+      }
+      h += '</tr>';
+    }
+    $('#hm-table').innerHTML = h + '</tbody>';
+    var sc = '';
+    if (pop === 'diff') sc = '<span>Insured lower</span><span class="strip" style="background:linear-gradient(90deg, rgba(var(--good),.6), transparent, rgba(var(--bad),.6))"></span><span>Insured higher</span>';
+    else sc = '<span>Below an even share</span><span class="strip" style="background:linear-gradient(90deg, rgba(var(--cold),.6), transparent, rgba(var(--hot),.6))"></span><span>Above an even share (' + base.toFixed(1) + '%)</span>';
+    sc += '<span class="hatchkey" aria-hidden="true"></span><span>Under ' + minD + ' deaths</span>';
+    $('#hm-scale').innerHTML = sc;
+    var gt = Math.round(sumArr(gen[0])), it = Math.round(sumArr(ins[0]));
+    $('#hm-read').textContent = 'Selection: ' + gt.toLocaleString('en-US') + ' deaths in the general series and ' + it.toLocaleString('en-US') + ' in the insured series. ' +
+      (pop === 'gen' ? 'The general series has few thin cells.' : thin + ' of ' + cells + ' cells fall under the minimum and are greyed out.');
+  }
+  initHM();
+  function onHM(e) {
+    if (e && e.target && e.target.id === 'hm-y0' && +$('#hm-y0').value > +$('#hm-y1').value) $('#hm-y1').value = $('#hm-y0').value;
+    if (e && e.target && e.target.id === 'hm-y1' && +$('#hm-y1').value < +$('#hm-y0').value) $('#hm-y0').value = $('#hm-y1').value;
+    renderHM();
+  }
+  $('#hm-controls').addEventListener('input', onHM);
+  $('#hm-controls').addEventListener('change', onHM);
+  renderHM();
+})();
+</script>
